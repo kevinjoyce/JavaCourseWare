@@ -1,0 +1,4 @@
+interface Sender
+{
+	void send();
+}
