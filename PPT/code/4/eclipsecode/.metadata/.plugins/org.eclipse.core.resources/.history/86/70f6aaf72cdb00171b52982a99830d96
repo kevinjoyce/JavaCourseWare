@@ -1,0 +1,60 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+
+public class Test {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		File file = new File("user.dat");
+		FileInputStream fs = null;
+		try {
+			fs = new FileInputStream(file);
+			byte[] content = new byte[1024];
+			int i=0;
+			int conInteger = 0;
+			while(true){
+				try {
+					conInteger = fs.read();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				if(-1 == conInteger){
+					break;
+				}else if('\r' == (char)conInteger || '\n' == (char)conInteger){
+					try {
+						System.out.println(new String(content, "UTF-8"));
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					continue;
+				}else{
+					content[i] = (byte)conInteger;
+					i++;
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			if(fs != null){
+				try {
+					fs.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+}
